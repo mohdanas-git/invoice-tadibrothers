@@ -212,7 +212,7 @@ function Invoice() {
                   <p className="bold-font">${item.productPrice}</p>
                   {item.protectionPlanProduct > 0 ? (
                       <p className="bold-font green protect-plan-price">
-                        ${item.protectionPlanProductPrice}
+                       @${item.protectionPlanProductPrice}
                       </p>
                     ) : (
                       ""
