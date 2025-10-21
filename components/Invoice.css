@@ -435,6 +435,7 @@ body{
         width: 28vw;
         height: 4rem;
         object-fit: contain;
+      margin: auto;
     }
     .video-cart{
         min-width: 100%;
