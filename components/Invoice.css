@@ -517,9 +517,12 @@ body{
 }
 }
 @media print {
-    
    .container {
     zoom: 0.556;
     transform-origin: top;
   }
+  .order-total{
+    min-width: fit-content;
+    margin-left: auto;
+}
 }
