@@ -43,24 +43,17 @@ function Invoice() {
     }
   });
 
-  const option = options.filter((item)=>{
-    if(!uniqueOptions.has(item.optionId)){
-      uniqueOptions.add(item.optionId);
-      return true;
-    }
-  })
-
-  const productArray = ord.cartItems.map((item) => {
-    const option = item.options.reduce(
-      (acc, curr) => acc + curr.optionPrice,
+  const subTotal = cartItems.reduce((total, item) => {
+    const optionTotal = item.options.reduce(
+      (sum, opt) => sum + opt.optionPrice,
       0
     );
-    return (
-      (item.productPrice + item.protectionPlanProductPrice + option) *
-      item.quantity
-    );
-  });
-  const subTotal = productArray.reduce((acc, cur) => acc + cur, 0);
+    const itemSubtotal =
+      item.productPrice * item.quantity +
+      item.protectionPlanProductPrice * item.protectionPlanProduct +
+      optionTotal;
+    return total + itemSubtotal;
+  }, 0);
 
   return (
     <div className="parent">
@@ -120,123 +113,108 @@ function Invoice() {
           </div>
           <hr />
 
-
           {/* -------------------------------------------------Cart Items----------------------------------------------- */}
+          <div className="main-product-border">
+            <div className="ordered-product">
+              {cartItems.map((item) => (
+                <div className="main-product-box">
+                  <div className="order-info">
+                    <div className="order-image">
+                      <img
+                        src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.defaultImage}&w=1080&q=75`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="order-name">
+                      <p className="bold-font">{item.productName}</p>
+                      <p className="orange-font">Quantity : {item.quantity}</p>
+                      {item.protectionPlanProduct > 0 ? (
+                        <p className="bold-font green">
+                          -Protection Plan: {item.protectionPlanProduct}
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    <div className="order-total">
+                      <div className="unit-price">
+                        <p>Unit Price</p>
+                        <p className="bold-font">${item.productPrice}</p>
+                        {item.protectionPlanProduct > 0 ? (
+                          <p className="bold-font green protect-plan-price">
+                            ${item.protectionPlanProductPrice}
+                          </p>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div className="sub-total">
+                        <p>Sub Total</p>
+                        <p className="bold-font">
+                          $
+                          {(
+                            item.productPrice * item.quantity +
+                            item.protectionPlanProductPrice *
+                              item.protectionPlanProduct +
+                            item.options.reduce(
+                              (sum, opt) => sum + opt.optionPrice,
+                              0
+                            )
+                          ).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="option-product">
+                    {item.options.map((items) => (
+                      <div id="option-info">
+                        <div className="option-image">
+                          <img
+                            src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${items.optionDefaultImage}&w=1080&q=75`}
+                            alt="optionImage"
+                          />
+                        </div>
+                        <div className="option-detail">
+                          <p className="bold-font">{items.optionName}</p>
+                          <p className="bold-font">$ {items.optionPrice}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* -------------------------------------------------Option Items--------------------------------------------- */}
 
           <div className="ordered-product">
             {cartItems.map((item) => (
               <div className="order-info">
                 <div className="order-image">
-                <img src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.defaultImage}&w=1080&q=75`}
-                  alt=""/>
+                  <img
+                    src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.defaultImage}&w=1080&q=75`}
+                    alt=""
+                  />
                 </div>
                 <div className="order-name">
-                <p className="bold-font">{item.productName}</p>
-                <p className="orange-font">Quantity : {item.quantity}</p>
-                {item.protectionPlanProduct > 0 ? (
-                    <p className="bold-font green">
-                      -Protection Plan: {item.protectionPlanProduct}
+                  <p className="bold-font">{item.productName}</p>
+                  <p className="orange-font">Quantity : {item.quantity}</p>
+                </div>
+                <div className="order-total">
+                  <div className="unit-price">
+                    <p>Unit Price</p>
+                    <p className="bold-font">${item.productPrice}</p>
+                  </div>
+                  <div className="sub-total">
+                    <p>Sub Total</p>
+                    <p className="bold-font">
+                      ${(item.productPrice * item.quantity).toFixed(2)}
                     </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              <div className="order-total">
-                <div className="unit-price">
-                  <p>Unit Price</p>
-                  <p className="bold-font">${item.productPrice}</p>
-                  {item.protectionPlanProduct > 0 ? (
-                      <p className="bold-font green protect-plan-price">
-                        @${item.protectionPlanProductPrice}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                </div>
-                <div className="sub-total">
-                  <p>Sub Total</p>
-                  <p className="bold-font">
-                    ${(item.productPrice * item.quantity).toFixed(2)}
-                  </p>
-                  {item.protectionPlanProduct > 0 ? (
-                      <p className="bold-font green protect-plan-price">
-                        $
-                        {item.protectionPlanProductPrice * item.protectionPlanProduct}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                </div>
-            </div>
-            </div>
-            ))}
-            </div>
-
-          {/* -------------------------------------------------Option Items--------------------------------------------- */}
-            <div className="option-product">
-              {option.map((item) => (
-                <div id="option-info">
-                  <div className="order-image">
-                  <img src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.optionDefaultImage}&w=1080&q=75`}
-                    alt="optionImage"/></div>
-                  <div className="option-detail">
-                    <p className="bold-font">{item.optionName}</p>
-                    <p className="bold-font">$ {item.optionPrice}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-            {/* -------------------------------------------------Option Items--------------------------------------------- */}
-
-            <div className="ordered-product">
-            {cartItems.map((item) => (
-              <div className="order-info">
-                <div className="order-image">
-                <img src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.defaultImage}&w=1080&q=75`}
-                  alt=""/>
-                </div>
-                <div className="order-name">
-                <p className="bold-font">{item.productName}</p>
-                <p className="orange-font">Quantity : {item.quantity}</p>
-                {item.protectionPlanProduct > 0 ? (
-                    <p className="bold-font green">
-                      -Protection Plan: {item.protectionPlanProduct}
-                    </p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              <div className="order-total">
-                <div className="unit-price">
-                  <p>Unit Price</p>
-                  <p className="bold-font">${item.productPrice}</p>
-                  {item.protectionPlanProduct > 0 ? (
-                      <p className="bold-font green protect-plan-price">
-                       @${item.protectionPlanProductPrice}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                </div>
-                <div className="sub-total">
-                  <p>Sub Total</p>
-                  <p className="bold-font">
-                    ${(item.productPrice * item.quantity).toFixed(2)}
-                  </p>
-                  {item.protectionPlanProduct > 0 ? (
-                      <p className="bold-font green protect-plan-price">
-                        $
-                        {item.protectionPlanProductPrice *
-                          item.protectionPlanProduct}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                </div>
-            </div>
-            </div>
+              </div>
             ))}
-            </div>
+          </div>
 
           {/* -----------------------------------------billing details---------------------------------------- */}
 
@@ -244,8 +222,14 @@ function Invoice() {
             <p>Bill Details</p>
             <div className="bill-amount">
               <p className="bill-head">
-                Protection Plan for {ord.protectionPlanOrder+" years @"+ord.protectionPlanOrderPrice+" each :"}
-                <span>${ord.protectionPlanOrder * ord.protectionPlanOrderPrice}</span>
+                Protection Plan for{" "}
+                {ord.protectionPlanOrder +
+                  " years @" +
+                  ord.protectionPlanOrderPrice +
+                  " each :"}
+                <span>
+                  ${ord.protectionPlanOrder * ord.protectionPlanOrderPrice}
+                </span>
               </p>
               <p className="bill-head">
                 SubTotal <span>${subTotal}</span>
@@ -271,7 +255,7 @@ function Invoice() {
         </div>
       </div>
       <div className="btn shipment-detail-value" onClick={generatePDF}>
-        Download PDF
+        Download Receipt
       </div>
       {/*------------------------------------Related Products--------------------------------*/}
       <p className="page-head font">Manuals related to your order :</p>
