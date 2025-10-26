@@ -54,6 +54,9 @@ body{
     gap: 0.5rem;
     margin: 1rem 0;
 }
+.option-detail{
+    font-size: 0.8rem;
+}
 #option-info{
     display: flex;
     gap: 0.5rem;
@@ -77,15 +80,14 @@ body{
   transition: transform 0.2s;
 }
 .order-image>img{
-   width: 3rem;
-   height: 4rem;
+   width: 5rem;
+   height: 5rem;
     object-fit: contain;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
     border: 1px solid var(--color);
-    padding: 0.5rem;
 }
 .main-product-box:first-child{
     margin-top: 0.1rem;
@@ -297,7 +299,6 @@ body{
     width: fit-content;
     min-width: 18rem;
     max-width: 100%;
-  margin: 0 5px;
 }
 .video-cart>title{
   margin : 15px 0px;
