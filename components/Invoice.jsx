@@ -54,7 +54,6 @@ function Invoice() {
       optionTotal;
     return total + itemSubtotal;
   }, 0);
-subtotal = subtotal.toFixed(2)
   return (
     <div className="parent">
       <div ref={PDFdownload} className="container">
