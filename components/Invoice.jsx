@@ -52,7 +52,7 @@ function Invoice() {
       (item.productPrice * item.quantity)*2 +
       item.protectionPlanProductPrice * item.protectionPlanProduct +
       optionTotal;
-    return total + itemSubtotal;
+    return total + itemSubtotal.toFixed(2);
   }, 0);
 
   return (
