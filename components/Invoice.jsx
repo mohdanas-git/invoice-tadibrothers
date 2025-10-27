@@ -49,10 +49,10 @@ function Invoice() {
       0
     );
     const itemSubtotal =
-      (item.productPrice * item.quantity)*2 +
+      (item.productPrice * item.quantity)+
       item.protectionPlanProductPrice * item.protectionPlanProduct +
       optionTotal;
-    return total + itemSubtotal.toFixed(2);
+    return total + itemSubtotal;
   }, 0);
 
   return (
@@ -153,7 +153,7 @@ function Invoice() {
                         <p className="bold-font">
                           $
                           {(
-                            item.productPrice * item.quantity +
+                            item.productPrice*2 * item.quantity +
                             item.protectionPlanProductPrice *
                               item.protectionPlanProduct +
                             item.options.reduce(
