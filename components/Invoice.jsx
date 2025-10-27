@@ -189,7 +189,7 @@ function Invoice() {
 
           <div className="ordered-product">
             {cartItems.map((item) => (
-              <div className="order-info">
+              <div className="order-info" id="extras">
                 <div className="option-image">
                   <img
                     src={`https://tadibrothers.com/_next/image?url=https%3A%2F%2Fpics.tadibrothers.com%2Ffiles%2Fitems%2F850_800%2F${item.defaultImage}&w=1080&q=75`}
