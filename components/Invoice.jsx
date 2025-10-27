@@ -43,18 +43,18 @@ function Invoice() {
     }
   });
 
-  const subTotal = cartItems.reduce((total, item) => {
-    const optionTotal = item.options.reduce(
+  let subTotal = cartItems.reduce((total, item) => {
+    let optionTotal = item.options.reduce(
       (sum, opt) => sum + opt.optionPrice,
       0
     );
-    const itemSubtotal =
+    let itemSubtotal =
       (item.productPrice * item.quantity)*2 +
       item.protectionPlanProductPrice * item.protectionPlanProduct +
       optionTotal;
     return total + itemSubtotal;
   }, 0);
-subtotal.toFixed(2)
+subtotal = subtotal.toFixed(2)
   return (
     <div className="parent">
       <div ref={PDFdownload} className="container">
