@@ -54,7 +54,7 @@ function Invoice() {
       optionTotal;
     return total + itemSubtotal;
   }, 0);
-  parseFloat(subTotal).toFixed(2)
+  
   return (
     <div className="parent">
       <div ref={PDFdownload} className="container">
@@ -232,7 +232,7 @@ function Invoice() {
                 </span>
               </p>
               <p className="bill-head">
-                SubTotal <span>${subTotal}</span>
+                SubTotal <span>${subTotal.toFixed(2)}</span>
               </p>
               <p className="bill-head">
                 Shipping : <span className="green">${ord.shipping}</span>
@@ -245,10 +245,10 @@ function Invoice() {
               Cart Total Amount
               <span className="font">
                 $
-                {subTotal +
+                {(subTotal +
                   ord.shipping -
                   ord.discount +
-                  ord.protectionPlanOrder * ord.protectionPlanOrderPrice}
+                  ord.protectionPlanOrder * ord.protectionPlanOrderPrice).toFixed(2)}
               </span>
             </p>
           </div>
