@@ -49,7 +49,7 @@ function Invoice() {
       0
     );
     const itemSubtotal =
-      item.productPrice * item.quantity +
+      (item.productPrice * item.quantity)*2 +
       item.protectionPlanProductPrice * item.protectionPlanProduct +
       optionTotal;
     return total + itemSubtotal;
